@@ -1,8 +1,10 @@
 package com.ultimaschool.pessoas;
+import java.util.ArrayList;
 
 public class Responsavel extends  Pessoa {
 
-    private boolean[] pagamentos = new  boolean[12];
+    final int MESES = 12;
+    private boolean[] pagamentos = new  boolean[MESES];
 
     public Responsavel(String nome) {
         super(nome);
@@ -19,18 +21,38 @@ public class Responsavel extends  Pessoa {
 
     public boolean pagarMensalidade(int mes, boolean situacao){
 
-        // todo implementado
+        pagamentos[mes] = situacao;
 
-        return false;
+        return situacao;
     }
 
     @Override
     public String verSituacao(int mes) {
-        return null;
+        if (getPagamentos()[mes]){
+        return "O pagamento foi ralizado nessa data: " + mes;
+        }
+        return "O pagameno ñ foi realizado nessa data " + mes;
     }
 
+    private String converteListaEsString(ArrayList<Integer>lista){
+        String resultado = "";
+        for (int l : lista){
+        resultado += l + ",";
+        }
+        return resultado;
+    }
+    private  String mesesComPagamento(){
+        ArrayList<Integer> listaMesesPaghos = new ArrayList<Integer>();
+
+        for (int mes = 1;mes < pagamentos.length;mes++){
+            if (pagamentos[mes]){
+                listaMesesPaghos.add(mes);
+            }
+        }
+        return "Os meses com pagamento foram: " + converteListaEsString(listaMesesPaghos);
+    }
     @Override
     public String relatorio() {
-        return null;
+        return "O responsavel: " + getNome() + " Não realizou o pagamento: " + mesesComPagamento();
     }
 }
